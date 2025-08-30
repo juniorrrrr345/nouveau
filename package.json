@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "npx serve .",
+    "build": "echo 'Static site - no build required'",
     "deploy": "vercel --prod",
     "deploy:preview": "vercel",
     "setup": "npm run setup:vercel && npm run setup:cloudflare",
