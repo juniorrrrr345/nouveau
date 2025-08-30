@@ -1,77 +1,171 @@
-# Boutique Cloudflare
+# 🛍️ Boutique Junior - Plateforme E-commerce
 
-Une application Next.js moderne pour une boutique en ligne, optimisée pour le déploiement sur Vercel.
+Une boutique en ligne moderne avec interface utilisateur élégante et API backend sur Cloudflare Workers.
 
-## 🚀 Démarrage rapide
+## 🚀 Déploiement Rapide
 
-### Prérequis
-- Node.js 18.17 ou plus récent
-- npm ou yarn
-
-### Installation
-
+### Déploiement automatique complet :
 ```bash
-# Installer les dépendances
-npm install
+./deploy.sh
+```
 
-# Lancer le serveur de développement
+## 📋 Architecture
+
+```
+boutique-junior/
+├── Frontend (Vercel)
+│   ├── index.html          # Interface boutique
+│   ├── vercel.json         # Configuration Vercel
+│   └── package.json        # Dépendances frontend
+│
+└── Backend (Cloudflare Workers)
+    ├── worker.js           # API endpoints
+    ├── wrangler.toml       # Configuration Cloudflare
+    └── test-api.js         # Tests API
+```
+
+## 🔧 Configuration Manuelle
+
+### 1. Frontend (Vercel)
+
+#### Installation :
+```bash
+npm install
+```
+
+#### Variables d'environnement :
+- `VERCEL_TOKEN` : Votre token Vercel
+- `API_URL` : https://boutique-junior.calitek-junior.workers.dev
+
+#### Déploiement :
+```bash
+npx vercel --prod --token=GVRVHnBZU26NIwiQg445vOFyigc5WC7xmpxK-XfV --yes
+```
+
+### 2. Backend (Cloudflare Workers)
+
+#### Installation :
+```bash
+cd cloudflare-worker
+npm install -g wrangler
+```
+
+#### Configuration :
+1. Connexion à Cloudflare :
+```bash
+wrangler login
+```
+
+2. Créer le namespace KV :
+```bash
+wrangler kv:namespace create "BOUTIQUE_KV"
+```
+
+3. Mettre à jour `wrangler.toml` avec l'ID du KV
+
+4. Déployer :
+```bash
+wrangler publish
+```
+
+## 📡 Endpoints API
+
+| Méthode | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/api/products` | Liste des produits |
+| POST | `/api/products` | Ajouter un produit |
+| PUT | `/api/products/:id` | Modifier un produit |
+| DELETE | `/api/products/:id` | Supprimer un produit |
+| GET | `/api/categories` | Liste des catégories |
+| POST | `/api/categories` | Ajouter une catégorie |
+| GET | `/api/farms` | Liste des farms |
+| GET | `/api/socials` | Réseaux sociaux |
+| GET | `/api/appearance` | Configuration visuelle |
+| GET | `/api/settings` | Paramètres boutique |
+
+## 🧪 Tests
+
+### Tester l'API :
+```bash
+cd cloudflare-worker
+node test-api.js
+```
+
+### Tester en local :
+```bash
 npm run dev
 ```
 
-Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur pour voir le résultat.
+## 🔗 URLs de Production
 
-## 📦 Scripts disponibles
+- **Frontend** : https://boutique-junior.vercel.app
+- **API** : https://boutique-junior.calitek-junior.workers.dev
 
-- `npm run dev` - Lance le serveur de développement
-- `npm run build` - Construit l'application pour la production
-- `npm run start` - Lance le serveur de production
-- `npm run lint` - Vérifie le code avec ESLint
+## 📦 Structure des Données
 
-## 🏗️ Structure du projet
-
-```
-boutique-cloudflare/
-├── app/                # Dossier App Router de Next.js
-│   ├── layout.tsx      # Layout principal
-│   ├── page.tsx        # Page d'accueil
-│   ├── not-found.tsx   # Page 404
-│   └── globals.css     # Styles globaux
-├── public/             # Fichiers statiques
-├── next.config.js      # Configuration Next.js
-├── tailwind.config.ts  # Configuration Tailwind CSS
-├── tsconfig.json       # Configuration TypeScript
-└── package.json        # Dépendances et scripts
+### Produit
+```json
+{
+  "id": "prod1",
+  "name": "Nom du produit",
+  "category": "Catégorie",
+  "farm": "Nom de la farm",
+  "description": "Description",
+  "image": "https://...",
+  "prices": [
+    {"quantity": "1g", "price": "10"},
+    {"quantity": "5g", "price": "45"}
+  ]
+}
 ```
 
-## 🎨 Technologies utilisées
+### Apparence
+```json
+{
+  "logo": "https://...",
+  "background": "https://...",
+  "primaryColor": "#667eea",
+  "secondaryColor": "#764ba2"
+}
+```
 
-- **Next.js 14.2.32** - Framework React pour la production
-- **React 18** - Bibliothèque UI
-- **TypeScript** - Typage statique
-- **Tailwind CSS** - Framework CSS utilitaire
-- **ESLint** - Linting du code
+## 🛠️ Scripts Disponibles
 
-## 🚀 Déploiement
+```bash
+# Frontend
+npm run dev          # Développement local
+npm run deploy       # Déploiement production
+npm run deploy:preview # Déploiement preview
 
-Cette application est configurée pour être déployée sur Vercel :
+# Backend (dans cloudflare-worker/)
+npm run dev          # Développement local
+npm run deploy       # Déploiement production
+npm run test         # Tests API
+```
 
-1. Connectez votre repository GitHub à Vercel
-2. Vercel détectera automatiquement la configuration Next.js
-3. Cliquez sur "Deploy" et votre application sera en ligne !
+## 🔒 Sécurité
 
-## 📝 Fonctionnalités
+- CORS configuré pour accepter toutes les origines
+- Token Vercel sécurisé dans les variables d'environnement
+- Données stockées dans Cloudflare KV
 
-- ✅ Rendu côté serveur (SSR) et génération statique (SSG)
-- ✅ Routing basé sur le système de fichiers
-- ✅ Optimisation automatique des images
-- ✅ Support TypeScript intégré
-- ✅ Styles avec Tailwind CSS
-- ✅ Page 404 personnalisée
+## 📝 Notes Importantes
 
-## 🤝 Contribution
+1. **Token Vercel** : Gardez votre token sécurisé et ne le partagez jamais publiquement
+2. **Account ID Cloudflare** : 294cf7ed66a345ba8f9a84fe9ba8521e
+3. **KV Namespace** : Doit être créé manuellement et configuré dans wrangler.toml
 
-Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
+## 🆘 Support
+
+En cas de problème :
+1. Vérifiez les logs Vercel : `vercel logs`
+2. Vérifiez les logs Cloudflare : `wrangler tail`
+3. Testez l'API : `node cloudflare-worker/test-api.js`
 
 ## 📄 Licence
 
 MIT
+
+---
+
+**Créé avec ❤️ par Junior**

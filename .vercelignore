@@ -1,0 +1,7 @@
+cloudflare-worker/
+.git/
+.gitignore
+README.md
+deploy.sh
+.env
+.env.local

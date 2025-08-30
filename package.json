@@ -1,24 +1,21 @@
 {
-  "name": "boutique-cloudflare",
+  "name": "boutique-junior",
   "version": "1.0.0",
-  "private": true,
+  "description": "Boutique Junior - E-commerce Platform",
+  "main": "index.html",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "npx serve .",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "setup": "npm run setup:vercel && npm run setup:cloudflare",
+    "setup:vercel": "vercel login && vercel link",
+    "setup:cloudflare": "cd cloudflare-worker && npm install && wrangler login"
   },
-  "dependencies": {
-    "next": "14.2.32",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
+  "keywords": ["boutique", "e-commerce", "shop"],
+  "author": "Junior",
+  "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.32",
-    "typescript": "^5"
+    "serve": "^14.2.0",
+    "vercel": "^32.0.0"
   }
 }
