@@ -1,12 +1,11 @@
 {
   "version": 2,
   "name": "boutique-junior",
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
+  "framework": null,
+  "buildCommand": "echo 'Static site - no build required'",
+  "outputDirectory": ".",
+  "installCommand": "echo 'No dependencies to install'",
+  "devCommand": "npx serve .",
   "routes": [
     {
       "src": "/(.*)",
