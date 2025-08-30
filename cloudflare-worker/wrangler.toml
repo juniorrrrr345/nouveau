@@ -1,0 +1,13 @@
+name = "boutique-junior"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+account_id = "294cf7ed66a345ba8f9a84fe9ba8521e"
+
+[env.production]
+kv_namespaces = [
+  { binding = "BOUTIQUE_KV", id = "votre-kv-id-ici" }
+]
+
+[vars]
+ADMIN_PASSWORD = "junior123"
+ALLOWED_ORIGINS = "*"

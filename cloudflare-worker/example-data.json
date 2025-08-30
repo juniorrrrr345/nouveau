@@ -1,0 +1,106 @@
+{
+  "products": [
+    {
+      "id": "prod1",
+      "name": "Purple Haze",
+      "category": "Fleurs",
+      "farm": "Cali Farm",
+      "description": "Une variété classique avec des notes fruitées",
+      "image": "https://example.com/purple-haze.jpg",
+      "thumbnail": "https://example.com/purple-haze-thumb.jpg",
+      "prices": [
+        {"quantity": "1g", "price": "12"},
+        {"quantity": "3g", "price": "35"},
+        {"quantity": "5g", "price": "55"},
+        {"quantity": "10g", "price": "100"}
+      ]
+    },
+    {
+      "id": "prod2",
+      "name": "OG Kush",
+      "category": "Fleurs",
+      "farm": "Premium Farm",
+      "description": "Variété premium avec un profil terpénique unique",
+      "image": "https://example.com/og-kush.jpg",
+      "prices": [
+        {"quantity": "1g", "price": "15"},
+        {"quantity": "3g", "price": "42"},
+        {"quantity": "5g", "price": "65"}
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat1",
+      "name": "Fleurs",
+      "emoji": "🌸"
+    },
+    {
+      "id": "cat2",
+      "name": "Résines",
+      "emoji": "🟫"
+    },
+    {
+      "id": "cat3",
+      "name": "Huiles",
+      "emoji": "💧"
+    },
+    {
+      "id": "cat4",
+      "name": "Accessoires",
+      "emoji": "🔧"
+    }
+  ],
+  "farms": [
+    {
+      "id": "farm1",
+      "name": "Cali Farm"
+    },
+    {
+      "id": "farm2",
+      "name": "Premium Farm"
+    },
+    {
+      "id": "farm3",
+      "name": "Bio Farm"
+    }
+  ],
+  "socials": [
+    {
+      "id": "social1",
+      "name": "Telegram",
+      "url": "https://t.me/boutiquejunior",
+      "emoji": "💬"
+    },
+    {
+      "id": "social2",
+      "name": "Instagram",
+      "url": "https://instagram.com/boutiquejunior",
+      "emoji": "📸"
+    },
+    {
+      "id": "social3",
+      "name": "WhatsApp",
+      "url": "https://wa.me/33612345678",
+      "emoji": "📱"
+    }
+  ],
+  "appearance": {
+    "logo": "https://example.com/logo.png",
+    "background": "https://example.com/background.jpg",
+    "primaryColor": "#667eea",
+    "secondaryColor": "#764ba2"
+  },
+  "pages": {
+    "info": "Bienvenue sur Boutique Junior!\n\n🌟 Qualité Premium\n📦 Livraison rapide\n🔒 Discrétion garantie\n💯 Satisfaction client\n\nNous sommes ouverts 7j/7 de 10h à 22h.\nContactez-nous pour toute question!",
+    "commander": "Pour commander:\n\n1. Choisissez vos produits\n2. Notez les références\n3. Contactez-nous sur Telegram\n4. Indiquez votre commande\n5. Recevez votre devis\n6. Validez et recevez votre commande\n\n⚡ Livraison en 24-48h\n🚚 Frais de port offerts dès 50€\n💳 Paiement sécurisé"
+  },
+  "settings": {
+    "telegram": "@boutiquejunior",
+    "whatsapp": "+33612345678",
+    "email": "contact@boutiquejunior.com",
+    "minimumOrder": "20",
+    "deliveryFee": "5",
+    "freeDeliveryFrom": "50"
+  }
+}
