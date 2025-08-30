@@ -1,0 +1,20 @@
+{
+  "name": "boutique-junior-worker",
+  "version": "1.0.0",
+  "description": "API Cloudflare Worker pour Boutique Junior",
+  "main": "worker.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler publish",
+    "tail": "wrangler tail",
+    "kv:create": "wrangler kv:namespace create BOUTIQUE_KV",
+    "kv:list": "wrangler kv:namespace list",
+    "test": "node test-api.js"
+  },
+  "keywords": ["cloudflare", "worker", "api", "boutique"],
+  "author": "Junior",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "boutique-junior",
+  "version": "1.0.0",
+  "description": "Boutique Junior - E-commerce Platform",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "setup": "npm run setup:vercel && npm run setup:cloudflare",
+    "setup:vercel": "vercel login && vercel link",
+    "setup:cloudflare": "cd cloudflare-worker && npm install && wrangler login"
+  },
+  "keywords": ["boutique", "e-commerce", "shop"],
+  "author": "Junior",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0",
+    "vercel": "^32.0.0"
+  }
+}

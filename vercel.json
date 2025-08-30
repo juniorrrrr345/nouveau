@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "name": "boutique-junior",
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "API_URL": "https://boutique-junior.calitek-junior.workers.dev",
+    "VERCEL_TOKEN": "@vercel-token"
+  }
+}
