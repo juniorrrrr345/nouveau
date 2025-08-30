@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Junior Boutique</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+        }
+
+        @font-face {
+            font-family: 'GTA';
+            src: url('hft.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: auto;
+            min-height: 100vh;
+            background-color: #1f1f1f;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #e0e0e0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            padding-top: 120px;
+            padding-bottom: 100px;
+        }
+
+        /* Header - SEULEMENT LE LOGO, PAS DE TITRE */
+        header {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(31, 31, 31, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #e0e0e0;
+            padding: 0 10px 5px;
+            border-bottom: 1px solid rgba(51, 51, 51, 0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        header img {
+            max-height: 80px;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Filtres */
+        .filters {
+            background: rgba(30, 30, 30, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Produits */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .product-card {
+            background: rgba(30, 30, 30, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-farm {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .product-category {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .product-prices {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .price-tag {
+            background: rgba(102, 126, 234, 0.2);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            border: 1px solid rgba(102, 126, 234, 0.5);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: rgba(30, 30, 30, 0.98);
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: #e0e0e0;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #fff;
+        }
+
+        /* Navigation bottom */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(31, 31, 31, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(51, 51, 51, 0.3);
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-items {
+            display: flex;
+            justify-content: space-around;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        /* Pages */
+        .page-content {
+            background: rgba(30, 30, 30, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .page-content h2 {
+            font-family: 'GTA', sans-serif;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .social-links {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            text-decoration: none;
+            color: #e0e0e0;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .social-link .emoji {
+            font-size: 30px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            color: #888;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 50px;
+            color: #888;
+            background: rgba(30, 30, 30, 0.85);
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER AVEC SEULEMENT LE LOGO -->
+    <header>
+        <img id="shopLogo" src="" alt="Logo">
+    </header>
+
+    <div class="container">
+        <!-- Filtres -->
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterProducts('all')">🏠 Tout</button>
+            <div id="categoryFilters"></div>
+            <div id="farmFilters"></div>
+        </div>
+
+        <!-- Produits -->
+        <div id="productsContainer">
+            <div class="loading">Chargement des produits...</div>
+        </div>
+
+        <!-- Pages -->
+        <div id="infoPage" style="display: none;">
+            <div class="page-content">
+                <h2>ℹ️ Informations</h2>
+                <div id="infoContent">Chargement...</div>
+            </div>
+        </div>
+
+        <div id="socialsPage" style="display: none;">
+            <div class="page-content">
+                <h2>🌐 Réseaux sociaux</h2>
+                <div id="socialsContent" class="social-links">Chargement...</div>
+            </div>
+        </div>
+
+        <div id="commanderPage" style="display: none;">
+            <div class="page-content">
+                <h2>🛒 Commander</h2>
+                <div id="commanderContent">Chargement...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation bottom -->
+    <div class="bottom-nav">
+        <div class="nav-items">
+            <a class="nav-item active" onclick="showPage('products')">
+                <div>🏠</div>
+                <div style="font-size: 12px;">Boutique</div>
+            </a>
+            <a class="nav-item" onclick="showPage('info')">
+                <div>ℹ️</div>
+                <div style="font-size: 12px;">Info</div>
+            </a>
+            <a class="nav-item" onclick="showPage('socials')">
+                <div>🌐</div>
+                <div style="font-size: 12px;">Réseaux</div>
+            </a>
+            <a class="nav-item" onclick="showPage('commander')">
+                <div>🛒</div>
+                <div style="font-size: 12px;">Commander</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal produit -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalProductName"></h2>
+            <div id="modalProductImage" style="margin: 20px 0;"></div>
+            <p id="modalProductDescription"></p>
+            <div id="modalProductPrices"></div>
+            <div style="margin-top: 20px;">
+                <button class="btn" onclick="orderProduct()">Commander</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration API
+        const API_URL = 'https://boutique-junior.calitek-junior.workers.dev';
+        
+        // Variables globales
+        let products = [];
+        let categories = [];
+        let farms = [];
+        let appearance = {};
+        let socials = [];
+        let pages = {};
+        let settings = {};
+        let currentFilter = 'all';
+        let currentProduct = null;
+
+        // CHARGER L'APPARENCE - LOGO ET FOND
+        async function loadAppearance() {
+            try {
+                const response = await fetch(API_URL + '/api/appearance');
+                if (response.ok) {
+                    appearance = await response.json();
+                    console.log('Apparence chargée:', appearance);
+                    
+                    // APPLIQUER LE LOGO - TOUJOURS L'AFFICHER
+                    if (appearance.logo) {
+                        const logoElement = document.getElementById('shopLogo');
+                        logoElement.src = appearance.logo;
+                        logoElement.style.display = 'block';
+                    }
+                    
+                    // APPLIQUER LE FOND - REMPLACER CALIRABBIT
+                    if (appearance.background) {
+                        document.body.style.backgroundImage = `url(${appearance.background})`;
+                        console.log('Fond appliqué:', appearance.background);
+                    }
+                    
+                    // Appliquer les couleurs
+                    if (appearance.primaryColor) {
+                        document.documentElement.style.setProperty('--primary-color', appearance.primaryColor);
+                    }
+                    if (appearance.secondaryColor) {
+                        document.documentElement.style.setProperty('--secondary-color', appearance.secondaryColor);
+                    }
+                }
+            } catch (error) {
+                console.error('Erreur chargement apparence:', error);
+            }
+        }
+
+        // CHARGER LES PRODUITS CORRECTEMENT
+        async function loadProducts() {
+            try {
+                const response = await fetch(API_URL + '/api/products');
+                if (response.ok) {
+                    const data = await response.json();
+                    products = Array.isArray(data) ? data : [];
+                    console.log('Produits chargés:', products);
+                    displayProducts();
+                } else {
+                    console.error('Erreur API produits:', response.status);
+                    document.getElementById('productsContainer').innerHTML = '<div class="no-products">Erreur de chargement des produits</div>';
+                }
+            } catch (error) {
+                console.error('Erreur chargement produits:', error);
+                document.getElementById('productsContainer').innerHTML = '<div class="no-products">Erreur de connexion à l\'API</div>';
+            }
+        }
+
+        // AFFICHER LES PRODUITS SANS BUGS
+        function displayProducts() {
+            const container = document.getElementById('productsContainer');
+            
+            let filteredProducts = products;
+            if (currentFilter !== 'all') {
+                if (currentFilter.startsWith('cat_')) {
+                    const category = currentFilter.replace('cat_', '');
+                    filteredProducts = products.filter(p => p.category === category);
+                } else if (currentFilter.startsWith('farm_')) {
+                    const farm = currentFilter.replace('farm_', '');
+                    filteredProducts = products.filter(p => p.farm === farm);
+                }
+            }
+            
+            if (!filteredProducts || filteredProducts.length === 0) {
+                container.innerHTML = '<div class="no-products">Aucun produit disponible</div>';
+                return;
+            }
+            
+            // Créer la grille de produits
+            const grid = document.createElement('div');
+            grid.className = 'products-grid';
+            
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                // Image du produit
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'product-image';
+                if (product.image || product.thumbnail) {
+                    const img = document.createElement('img');
+                    img.src = product.image || product.thumbnail;
+                    img.alt = product.name || 'Produit';
+                    img.onerror = function() {
+                        this.parentElement.innerHTML = '📦';
+                    };
+                    imageDiv.appendChild(img);
+                } else {
+                    imageDiv.innerHTML = '📦';
+                }
+                
+                if (product.farm) {
+                    const farmBadge = document.createElement('div');
+                    farmBadge.className = 'product-farm';
+                    farmBadge.textContent = product.farm;
+                    imageDiv.appendChild(farmBadge);
+                }
+                
+                // Infos du produit
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'product-info';
+                
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'product-name';
+                nameDiv.textContent = product.name || 'Produit sans nom';
+                
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'product-category';
+                categoryDiv.textContent = product.category || 'Sans catégorie';
+                
+                const pricesDiv = document.createElement('div');
+                pricesDiv.className = 'product-prices';
+                if (product.prices && product.prices.length > 0) {
+                    product.prices.forEach(price => {
+                        const priceTag = document.createElement('span');
+                        priceTag.className = 'price-tag';
+                        priceTag.textContent = `📦 ${price.quantity} → ${price.price}€`;
+                        pricesDiv.appendChild(priceTag);
+                    });
+                } else {
+                    const priceTag = document.createElement('span');
+                    priceTag.className = 'price-tag';
+                    priceTag.textContent = 'Prix sur demande';
+                    pricesDiv.appendChild(priceTag);
+                }
+                
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'product-actions';
+                
+                const viewBtn = document.createElement('button');
+                viewBtn.className = 'btn btn-outline';
+                viewBtn.textContent = '👁️ Voir';
+                viewBtn.onclick = () => viewProduct(product);
+                
+                const orderBtn = document.createElement('button');
+                orderBtn.className = 'btn';
+                orderBtn.textContent = '🛒 Commander';
+                orderBtn.onclick = () => orderProduct(product);
+                
+                actionsDiv.appendChild(viewBtn);
+                actionsDiv.appendChild(orderBtn);
+                
+                infoDiv.appendChild(nameDiv);
+                infoDiv.appendChild(categoryDiv);
+                infoDiv.appendChild(pricesDiv);
+                infoDiv.appendChild(actionsDiv);
+                
+                card.appendChild(imageDiv);
+                card.appendChild(infoDiv);
+                grid.appendChild(card);
+            });
+            
+            container.innerHTML = '';
+            container.appendChild(grid);
+        }
+
+        // Charger les catégories
+        async function loadCategories() {
+            try {
+                const response = await fetch(API_URL + '/api/categories');
+                if (response.ok) {
+                    categories = await response.json() || [];
+                    displayCategoryFilters();
+                }
+            } catch (error) {
+                console.error('Erreur chargement catégories:', error);
+            }
+        }
+
+        // Afficher les filtres de catégories
+        function displayCategoryFilters() {
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = categories.map(cat => 
+                `<button class="filter-btn" onclick="filterProducts('cat_${cat.name}')">${cat.emoji || ''} ${cat.name}</button>`
+            ).join('');
+        }
+
+        // Charger les farms
+        async function loadFarms() {
+            try {
+                const response = await fetch(API_URL + '/api/farms');
+                if (response.ok) {
+                    farms = await response.json() || [];
+                    displayFarmFilters();
+                }
+            } catch (error) {
+                console.error('Erreur chargement farms:', error);
+            }
+        }
+
+        // Afficher les filtres de farms
+        function displayFarmFilters() {
+            const container = document.getElementById('farmFilters');
+            container.innerHTML = farms.map(farm => 
+                `<button class="filter-btn" onclick="filterProducts('farm_${farm.name}')">🏭 ${farm.name}</button>`
+            ).join('');
+        }
+
+        // Filtrer les produits
+        function filterProducts(filter) {
+            currentFilter = filter;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            displayProducts();
+        }
+
+        // Charger les réseaux sociaux
+        async function loadSocials() {
+            try {
+                const response = await fetch(API_URL + '/api/socials');
+                if (response.ok) {
+                    socials = await response.json() || [];
+                    displaySocials();
+                }
+            } catch (error) {
+                console.error('Erreur chargement réseaux sociaux:', error);
+            }
+        }
+
+        // Afficher les réseaux sociaux
+        function displaySocials() {
+            const container = document.getElementById('socialsContent');
+            if (socials.length === 0) {
+                container.innerHTML = '<p>Aucun réseau social configuré</p>';
+            } else {
+                container.innerHTML = socials.map(social => `
+                    <a href="${social.url.startsWith('http') ? social.url : '#'}" class="social-link" ${social.url.startsWith('http') ? 'target="_blank"' : ''}>
+                        <span class="emoji">${social.emoji}</span>
+                        <div>
+                            <div style="font-weight: bold;">${social.name}</div>
+                            <div style="font-size: 14px; opacity: 0.8;">${social.url}</div>
+                        </div>
+                    </a>
+                `).join('');
+            }
+        }
+
+        // Charger les pages
+        async function loadPages() {
+            try {
+                const response = await fetch(API_URL + '/api/pages');
+                if (response.ok) {
+                    pages = await response.json() || {};
+                    
+                    if (pages.info) {
+                        document.getElementById('infoContent').innerHTML = pages.info.replace(/\n/g, '<br>');
+                    }
+                    if (pages.commander) {
+                        document.getElementById('commanderContent').innerHTML = pages.commander.replace(/\n/g, '<br>');
+                    }
+                }
+            } catch (error) {
+                console.error('Erreur chargement pages:', error);
+            }
+        }
+
+        // Charger les paramètres
+        async function loadSettings() {
+            try {
+                const response = await fetch(API_URL + '/api/settings');
+                if (response.ok) {
+                    settings = await response.json() || {};
+                }
+            } catch (error) {
+                console.error('Erreur chargement paramètres:', error);
+            }
+        }
+
+        // Afficher une page
+        function showPage(page) {
+            document.getElementById('productsContainer').style.display = 'none';
+            document.getElementById('infoPage').style.display = 'none';
+            document.getElementById('socialsPage').style.display = 'none';
+            document.getElementById('commanderPage').style.display = 'none';
+            document.querySelector('.filters').style.display = 'none';
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.nav-item').classList.add('active');
+            
+            switch(page) {
+                case 'products':
+                    document.getElementById('productsContainer').style.display = 'block';
+                    document.querySelector('.filters').style.display = 'flex';
+                    break;
+                case 'info':
+                    document.getElementById('infoPage').style.display = 'block';
+                    break;
+                case 'socials':
+                    document.getElementById('socialsPage').style.display = 'block';
+                    break;
+                case 'commander':
+                    document.getElementById('commanderPage').style.display = 'block';
+                    break;
+            }
+        }
+
+        // Voir un produit
+        function viewProduct(product) {
+            currentProduct = product;
+            document.getElementById('modalProductName').textContent = product.name || 'Produit';
+            document.getElementById('modalProductDescription').textContent = product.description || 'Pas de description';
+            
+            const imageContainer = document.getElementById('modalProductImage');
+            if (product.image || product.thumbnail) {
+                imageContainer.innerHTML = `<img src="${product.image || product.thumbnail}" style="width: 100%; border-radius: 10px;">`;
+            } else if (product.video) {
+                imageContainer.innerHTML = `<video src="${product.video}" controls style="width: 100%; border-radius: 10px;"></video>`;
+            } else {
+                imageContainer.innerHTML = '<div style="text-align: center; font-size: 100px;">📦</div>';
+            }
+            
+            const pricesContainer = document.getElementById('modalProductPrices');
+            if (product.prices && product.prices.length > 0) {
+                pricesContainer.innerHTML = '<h3>Prix disponibles:</h3>' + 
+                    product.prices.map(p => `<div class="price-tag" style="display: inline-block; margin: 5px;">📦 ${p.quantity} → ${p.price}€</div>`).join('');
+            } else {
+                pricesContainer.innerHTML = '<p>Prix sur demande</p>';
+            }
+            
+            document.getElementById('productModal').style.display = 'block';
+        }
+
+        // Commander un produit
+        function orderProduct(product) {
+            if (product) currentProduct = product;
+            
+            if (settings.telegram) {
+                const message = `Bonjour, je souhaite commander: ${currentProduct ? currentProduct.name : 'ce produit'}`;
+                window.open(`https://t.me/${settings.telegram.replace('@', '')}?text=${encodeURIComponent(message)}`, '_blank');
+            } else {
+                alert('Contact non configuré');
+            }
+        }
+
+        // Fermer le modal
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        // Fermer le modal si on clique en dehors
+        window.onclick = function(event) {
+            const modal = document.getElementById('productModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // CHARGER TOUT AU DÉMARRAGE
+        window.onload = function() {
+            console.log('Chargement de la boutique...');
+            loadAppearance();  // Logo et fond en premier
+            loadProducts();    // Puis les produits
+            loadCategories();
+            loadFarms();
+            loadSocials();
+            loadPages();
+            loadSettings();
+        };
+    </script>
+</body>
+</html>
